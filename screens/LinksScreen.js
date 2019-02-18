@@ -1,19 +1,34 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
-
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View
+} from 'react-native';
+import {ExpoLinksView} from '@expo/samples';
+import {AppContext} from '../App';
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: null
   };
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-        <ExpoLinksView />
-      </ScrollView>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <AppContext.Consumer>
+          {({state, addNumber}) => (
+            <View>
+              <TouchableOpacity onPress={addNumber}>
+                <Text>Add Number</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.props.navigate}>
+                <Text>Home</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </AppContext.Consumer>
+      </View>
     );
   }
 }
@@ -22,6 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });

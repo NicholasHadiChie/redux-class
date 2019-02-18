@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Image,
+  Button,
   Platform,
   ScrollView,
   StyleSheet,
@@ -9,30 +10,34 @@ import {
   View
 } from 'react-native';
 import {WebBrowser} from 'expo';
-
+import store from '../redux-config/store';
 import {MonoText} from '../components/StyledText';
+import {AppContext} from '../App';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
-  constructor(props) {
-    super(props);
-    this.state = {
-      number: 7
-    };
-  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={{color: '#DD0077', fontSize: 60}}>
-          {this.state.number}
-        </Text>
-      </View>
+      <AppContext.Consumer>
+        {(context) => {
+          console.log(context, 'CONTEXT');
+          return (
+            <View style={styles.container}>
+              <Text style={{color: '#DD0077', fontSize: 60}}>
+                {context.state.number}
+              </Text>
+              <TouchableOpacity onPress={context.addNumber}>
+                <Text>Add 1</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.props.navigate}>
+                <Text>Link</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      </AppContext.Consumer>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
